@@ -15,7 +15,7 @@ class CreateDogTable extends Migration
     {
         Schema::create('dog', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->timestamps(); 
             $table->integer('votes')->nullable();
             $table->float('amount', 16, 2)->nullable();
             $table->string('country')->nullable();

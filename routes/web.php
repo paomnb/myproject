@@ -109,7 +109,30 @@ Route::get('/home', 'HomeController@index')->name('home');
 | contains the "web" middleware group. Now create something great!
 |
 */
- 
+
+
+
+//
 Route::get('/', function () {
     return view('table');
 });
+//model
+Route::get('/covid19', 'Covid19Controller@index');
+
+//read
+Route::get('/covid19', 'Covid19Controller@index');
+
+//display  item
+Route::get('/covid19/{id}', 'Covid19Controller@show');
+
+ //read and edit
+
+ Route::get("/covid19/create", "Covid19Controller@create");
+
+Route::get("/covid19/{id}/edit", "Covid19Controller@edit");
+
+//delete
+Route::delete('/covid19/{id}', 'Covid19Controller@destroy');
+
+Route::post("/covid19", "Covid19Controller@store");
+Route::patch("/covid19/{id}", "Covid19Controller@update");
