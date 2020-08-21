@@ -1,13 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-Use App\Covid19;
+use App\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
-class Covid19Controller extends Controller
+class StaffsController extends Controller
 {
-    //ดึงข้อมูลจาก database
     /**
      * Display a listing of the resource.
      *
@@ -15,28 +13,29 @@ class Covid19Controller extends Controller
      */
     public function index(Request $request)
     {
+        //
         $perPage = 10; 
-        //$sql = "select * from covid19s";    
-        //$covid19s = DB::select($sql, []); 
         $search = $request->get('search');        
         if (!empty($search)) {
 //กรณีมีข้อมูลที่ต้องการ search จะมีการใช้คำสั่ง where และ orWhere
-            $covid19s = Covid19::where('country', 'LIKE', "%$search%")
-                ->orWhere('total', 'LIKE', "%$search%")
-                ->orWhere('active', 'LIKE', "%$search%")
-                ->orWhere('death', 'LIKE', "%$search%")
-                ->orWhere('recovered', 'LIKE', "%$search%")
-                ->orderBy('date', 'desc')->paginate($perPage);
+            $staffs = Staff::where('id', 'LIKE', "%$search%")
+                ->orWhere('name', 'LIKE', "%$search%")
+                ->orWhere('age', 'LIKE', "%$search%")
+                ->orWhere('salary', 'LIKE', "%$search%")
+                ->orWhere('phone', 'LIKE', "%$search%")
+                
+                ->orderBy('id', 'desc')->paginate($perPage);
         } else {
 //กรณีไม่มีข้อมูล search จะทำงานเหมือนเดิม
-            $covid19s = Covid19::orderBy('date', 'desc')->paginate($perPage);
+        
+            $staffs = Staff::paginate($perPage);
         }        
-        //$covid19s = Covid19::orderBy('date', 'desc')->paginate($perPage);
+      
 
-
-        return view('covid19/index' , compact('covid19s') );
+        return view('staff/index' , compact('staffs') );
     }
 
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -45,7 +44,7 @@ class Covid19Controller extends Controller
     public function create()
     {
         //
-        return view('covid19.create');
+        return view('staff.create');
     }
 
     /**
@@ -59,71 +58,67 @@ class Covid19Controller extends Controller
         //
         $requestData = $request->all();
         
-        Covid19::create($requestData);
+        Staff::create($requestData);
 
-        return redirect('covid19');
-
+        return redirect('staff');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Staff  $staff
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show( $id)
     {
         //
-        $covid19 = Covid19::findOrFail($id);
+        $staff = Staff::findOrFail($id);
 
-        return view('covid19.show', compact('covid19'));
-
+        return view('staff.show', compact('staff'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Staff  $staff
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit( $id)
     {
         //
-        $covid19 = Covid19::findOrFail($id);
+        $staff = Staff::findOrFail($id);
 
-        return view('covid19.edit', compact('covid19'));
-
-
+        return view('staff.edit', compact('staff'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Staff  $staff
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request , $id)
     {
-        //
         $requestData = $request->all();        
-        $covid19 = Covid19::findOrFail($id);
-        $covid19->update($requestData);
-        return redirect('covid19');
+        $staff = Staff::findOrFail($id);
+        $staff->update($requestData);
+        return redirect('staff');
 
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Staff  $staff
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy( $id)
     {
         //
-        Covid19::destroy($id);
+        //
+        staff::destroy($id);
 
-        return redirect('covid19'); 
+        return redirect('staff'); 
     }
 }

@@ -136,3 +136,33 @@ Route::delete('/covid19/{id}', 'Covid19Controller@destroy');
 
 Route::post("/covid19", "Covid19Controller@store");
 Route::patch("/covid19/{id}", "Covid19Controller@update");
+
+Route::resource('/covid19','Covid19Controller');
+
+/*
+Route::get('/covid19', 'Covid19Controller@index');
+Route::get('/covid19', 'Covid19Controller@index');
+Route::get('/covid19/{id}', 'Covid19Controller@show');
+ Route::get("/covid19/create", "Covid19Controller@create");
+ Route::get("/covid19/create", "Covid19Controller@create");
+Route::get("/covid19/{id}/edit", "Covid19Controller@edit");
+Route::delete('/covid19/{id}', 'Covid19Controller@destroy');
+Route::post("/covid19", "Covid19Controller@store");
+Route::patch("/covid19/{id}", "Covid19Controller@update");
+*/
+
+/*
+Route::get('/staffs', 'StaffsController@index');
+Route::get("/staffs/create","StaffsController@create");
+
+
+//display  item
+Route::get('/staffs/{id}', 'StaffsController@show');
+
+
+Route::get("/staffs/{id}/edit", "StaffsController@edit");
+
+Route::post("/staffs", "StaffsController@store");
+Route::patch("/staffs/{id}", "StaffsController@update");
+*/
+Route::resource('/staff','StaffsController');
