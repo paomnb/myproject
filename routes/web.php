@@ -84,13 +84,6 @@ Route::get( "/newgallery/bird" , "MyProfileController@bird" );
 //แสดง coronavirus
 Route::get( "/coronavirus" , "MyProfileController@coronavirus" );
 //bootstrap
-Route::get("/teacher" , function (){
-	return view("teacher/index");
-});
-
-Route::get("/student" , function (){
-	return view("student/index");
-});
 
 
 Auth::routes();
@@ -109,36 +102,39 @@ Route::get('/home', 'HomeController@index')->name('home');
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
-
-//
-Route::get('/', function () {
-    return view('table');
+///////////////////////เข้าระบบโดย แอดมินกับทีช/////////////////////////////////////////////////////////////////////////////
+Route::middleware(['auth', 'role:teacher'])->group(function () {
+Route::get("/teacher" , function (){
+	return view("teacher/index");
 });
-//model
-Route::get('/covid19', 'Covid19Controller@index');
+Route::get("/student" , function (){
+	return view("student/index");
+});
+});
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+Route::get('/', function () {
+    return view('welcome');
+});
+///////////////////////////////////////////////////เข้าระบบโดยแอดมิน///////////////////////////////////////////////////
+Route::middleware(['auth','admin,teacher'])->group(function () {
 //read
 Route::get('/covid19', 'Covid19Controller@index');
-
 //display  item
 Route::get('/covid19/{id}', 'Covid19Controller@show');
-
  //read and edit
-
+});
+Route::middleware(['auth','teacher'])->group(function () {
  Route::get("/covid19/create", "Covid19Controller@create");
-
 Route::get("/covid19/{id}/edit", "Covid19Controller@edit");
-
 //delete
 Route::delete('/covid19/{id}', 'Covid19Controller@destroy');
-
 Route::post("/covid19", "Covid19Controller@store");
 Route::patch("/covid19/{id}", "Covid19Controller@update");
-
 Route::resource('/covid19','Covid19Controller');
+});
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*
 Route::get('/covid19', 'Covid19Controller@index');
 Route::get('/covid19', 'Covid19Controller@index');
@@ -165,4 +161,13 @@ Route::get("/staffs/{id}/edit", "StaffsController@edit");
 Route::post("/staffs", "StaffsController@store");
 Route::patch("/staffs/{id}", "StaffsController@update");
 */
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Route::middleware(['auth','guest'])->group(function () {
 Route::resource('/staff','StaffsController');
+Route::resource('post', 'PostController');
+Route::resource('book', 'BookController');
+Route::resource('book', 'BookController');
+Route::resource('street', 'streetController');
+Route::resource('street', 'streetController');
+Route::resource('street', 'streetController');
+});
