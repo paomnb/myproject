@@ -171,3 +171,6 @@ Route::resource('street', 'streetController');
 Route::resource('street', 'streetController');
 Route::resource('street', 'streetController');
 });
+Route::resource('profiles', 'profilesController');
+Route::resource('vehicles', 'vehiclesController');
+Route::resource('user', 'UserController');
