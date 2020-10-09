@@ -171,6 +171,21 @@ Route::resource('street', 'streetController');
 Route::resource('street', 'streetController');
 Route::resource('street', 'streetController');
 });
+
+
+
+//pdf
+Route::get('/product/pdf', 'ProductController@pdf_index');
 Route::resource('profiles', 'profilesController');
 Route::resource('vehicles', 'vehiclesController');
 Route::resource('user', 'UserController');
+Route::resource('order', 'OrderController');
+Route::resource('payment', 'PaymentController');
+Route::resource('order-product', 'OrderProductController');
+Route::resource('product', 'ProductController');
+Route::middleware(['auth'])->group(function () {
+Route::resource('order', 'OrderController');
+Route::resource('payment', 'PaymentController');
+Route::resource('order-product', 'OrderProductController');
+});
+Route::resource('product', 'ProductController');
